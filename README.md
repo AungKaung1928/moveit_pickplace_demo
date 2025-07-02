@@ -130,14 +130,19 @@ Both positions maintain the same orientation (no rotation).
 moveit_project_ws/
 ├── src/
 │   └── simple_moveit_demo/
-│       ├── package.xml              # Package dependencies and metadata
-│       ├── setup.py                 # Python package setup
+│       ├── package.xml
+│       ├── setup.py
 │       ├── simple_moveit_demo/
-│       │   ├── __init__.py         # Python package initialization
-│       │   └── pick_place_demo.py  # Main demo implementation
-│       ├── launch/                 # Launch files (optional)
-│       ├── config/                 # Configuration files (optional)
-│       └── urdf/                   # Robot descriptions (optional)
+│       │   ├── init.py
+│       │   └── pick_place_demo.py
+│       ├── launch/
+│       │   ├── demo.launch.py
+│       │   └── moveit.launch.py
+│       ├── config/
+│       │   ├── panda_arm.yaml
+│       │   └── controllers.yaml
+│       └── urdf/
+│           └── panda_arm.urdf.xacro
 ```
 
 ### Key Components
