@@ -1,6 +1,6 @@
 # Simple MoveIt Pick and Place Demo
 
-A comprehensive ROS2 pick and place demonstration using MoveIt2 and the Panda robot arm. This project demonstrates basic robotic manipulation concepts including motion planning, constraints, and workspace parameters.
+A comprehensive ROS2 pick and place demonstration using MoveIt2 and the Panda robot arm. 
 
 ## Overview
 
@@ -219,8 +219,6 @@ ros2 service call /get_planning_scene moveit_msgs/srv/GetPlanningScene "{}"
 ros2 node list
 ```
 
-## Customization
-
 ### Modifying Positions
 
 Edit the pose definitions in `pick_place_demo.py`:
@@ -247,28 +245,3 @@ def run_demo(self):
     self.move_to_pose(intermediate_pose, "intermediate")
     self.move_to_pose(place_pose, "place")
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature/new-feature`)
-5. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- MoveIt2 community for the motion planning framework
-- Franka Emika for the Panda robot model
-- ROS2 community for the robotics middleware
-
-## Further Reading
-
-- [MoveIt2 Documentation](https://moveit.picknik.ai/)
-- [ROS2 Documentation](https://docs.ros.org/en/humble/)
-- [Franka Panda Documentation](https://frankaemika.github.io/docs/)
-- [Motion Planning Concepts](https://moveit.picknik.ai/main/doc/concepts/concepts.html)
