@@ -4,7 +4,7 @@
   <name>simple_moveit_demo</name>
   <version>0.0.0</version>
   <description>Simple MoveIt pick and place demo</description>
-  <maintainer email="aungkaungmyattt1928@gmail.com">allkg</maintainer>
+  <maintainer email="user@todo.todo">user</maintainer>
   <license>Apache-2.0</license>
 
   <depend>rclpy</depend>
