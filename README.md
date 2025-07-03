@@ -235,18 +235,3 @@ pick_pose.pose.position = Point(x=0.5, y=0.2, z=0.4)
 # Example: Add rotation
 pick_pose.pose.orientation = Quaternion(x=0.0, y=0.707, z=0.0, w=0.707)
 ```
-
-### Adding More Positions
-
-Extend the `run_demo()` method to include additional waypoints:
-
-```python
-def run_demo(self):
-    # Add intermediate position
-    intermediate_pose = PoseStamped()
-    # ... configure pose ...
-    
-    self.move_to_pose(pick_pose, "pick")
-    self.move_to_pose(intermediate_pose, "intermediate")
-    self.move_to_pose(place_pose, "place")
-```
