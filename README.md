@@ -1,8 +1,8 @@
-# Simple MoveIt Pick and Place Demo
+# 🤖 Simple MoveIt Pick and Place Demo
 
 A comprehensive ROS2 pick and place demonstration using MoveIt2 and the Panda robot arm. 
 
-## Overview
+## 📋 Overview
 
 This project implements a simple pick and place operation using the Franka Emika Panda robot arm in simulation. The demo showcases fundamental robotics concepts such as:
 
@@ -14,7 +14,7 @@ This project implements a simple pick and place operation using the Franka Emika
 
 The robot arm moves between two predefined positions, simulating a basic pick and place operation commonly used in industrial automation and research applications.
 
-## Prerequisites
+## ⚙️ Prerequisites
 
 Before running this demo, ensure you have the following installed:
 
@@ -35,17 +35,16 @@ sudo apt install ros-humble-moveit ros-humble-moveit-resources-panda-moveit-conf
 sudo apt install ros-humble-moveit-visual-tools ros-humble-geometric-shapes
 ```
 
-## Installation
+## 🚀 Installation
 
-1. **Create and navigate to workspace:**
+1. **Create workspace and navigate to source directory:**
 ```bash
 mkdir -p ~/moveit_project_ws/src
-cd ~/moveit_project_ws
+cd ~/moveit_project_ws/src
 ```
 
 2. **Clone this repository:**
 ```bash
-cd src
 git clone <your-repo-url> simple_moveit_demo
 ```
 
@@ -60,7 +59,7 @@ colcon build --packages-select simple_moveit_demo
 source install/setup.bash
 ```
 
-## Usage
+## 🎯 Usage
 
 ### Running the Demo
 
@@ -72,10 +71,7 @@ source install/setup.bash
 ros2 launch moveit_resources_panda_moveit_config demo.launch.py
 ```
 
-This launches:
-- RViz with MoveIt motion planning plugin
-- Panda robot model visualization
-- MoveIt move_group action server
+This launches RViz with MoveIt motion planning plugin, Panda robot model visualization, and MoveIt move_group action server.
 
 2. **Run the pick and place demo in a second terminal:**
 ```bash
@@ -101,7 +97,7 @@ When running successfully, you should see output similar to:
 [INFO] [pick_place_demo]: Pick and place demo completed!
 ```
 
-## What it Does
+## 📊 What it Does
 
 The demonstration performs the following sequence:
 
@@ -112,15 +108,8 @@ The demonstration performs the following sequence:
 
 ### Robot Positions
 
-- **Pick Position**: 
-  - X: 0.4m (forward from base)
-  - Y: 0.1m (left from base)
-  - Z: 0.3m (up from base)
-
-- **Place Position**:
-  - X: 0.4m (forward from base)  
-  - Y: -0.1m (right from base)
-  - Z: 0.3m (up from base)
+- **Pick Position**: X: 0.4m, Y: 0.1m, Z: 0.3m
+- **Place Position**: X: 0.4m, Y: -0.1m, Z: 0.3m
 
 Both positions maintain the same orientation (no rotation).
 
@@ -158,7 +147,7 @@ moveit_project_ws/
 - `run_demo()`: Orchestrates the pick and place sequence
 - `move_to_pose()`: Handles individual motion planning and execution
 
-## Technical Details
+## 🔧 Technical Details
 
 ### Motion Planning Parameters
 
@@ -171,20 +160,16 @@ moveit_project_ws/
 
 ### Constraints
 
-**Position Constraints**:
-- Tolerance: 1cm box around target position
-- Applied to `panda_hand` link
+**Position Constraints**: 1cm box tolerance around target position, applied to `panda_hand` link
 
-**Orientation Constraints**:
-- Tolerance: 0.1 radians on all axes
-- Maintains consistent end-effector orientation
+**Orientation Constraints**: 0.1 radians tolerance on all axes, maintains consistent end-effector orientation
 
 ### Workspace Parameters
 
 - **Frame**: `panda_link0` (robot base)
 - **Bounds**: -1.0m to +1.0m in all directions
 
-## Troubleshooting
+## 🛠️ Troubleshooting
 
 ### Common Issues
 
@@ -202,27 +187,6 @@ moveit_project_ws/
    - Ensure all ROS2 and MoveIt2 packages are installed
    - Check Python dependencies
    - Rebuild workspace with `colcon build`
-
-4. **RCL shutdown errors**
-   - This is a known issue with rapid node shutdown
-   - Does not affect functionality
-   - Fixed in the current code version
-
-### Debugging Commands
-
-```bash
-# Check if MoveGroup action server is running
-ros2 action list
-
-# Monitor robot joint states
-ros2 topic echo /joint_states
-
-# Check available planning groups
-ros2 service call /get_planning_scene moveit_msgs/srv/GetPlanningScene "{}"
-
-# List active nodes
-ros2 node list
-```
 
 ### Modifying Positions
 
