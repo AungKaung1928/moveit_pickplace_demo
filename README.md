@@ -169,25 +169,6 @@ moveit_project_ws/
 - **Frame**: `panda_link0` (robot base)
 - **Bounds**: -1.0m to +1.0m in all directions
 
-## 🛠️ Troubleshooting
-
-### Common Issues
-
-1. **"MoveGroup action server not found"**
-   - Ensure MoveIt demo is running first
-   - Check that `moveit_resources_panda_moveit_config` is installed
-   - Verify ROS2 environment is properly sourced
-
-2. **"Goal rejected" or planning failures**
-   - Check if target positions are reachable
-   - Verify robot model loads correctly in RViz
-   - Increase planning time or attempts if needed
-
-3. **Import errors**
-   - Ensure all ROS2 and MoveIt2 packages are installed
-   - Check Python dependencies
-   - Rebuild workspace with `colcon build`
-
 ### Modifying Positions
 
 Edit the pose definitions in `pick_place_demo.py`:
