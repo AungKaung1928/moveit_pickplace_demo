@@ -1,184 +1,172 @@
-🤖 MoveIt2 Pick and Place Demo
-A ROS2 demo showing advanced pick-and-place with MoveIt2 and the Panda robot arm.
+# 🤖 MoveIt2 Pick and Place Demo
 
-📋 Assignment Submission - Free Task
-Target Company: 株式会社キビテク
-Assignment: Unique robot development program
-Submission Type: Free task
+A ROS2 pick and place demonstration using MoveIt2 and the Panda robot arm.
 
-🎯 Purpose（目的）
-This project demonstrates core robotics programming skills by building a pick-and-place system using MoveIt2 and ROS2. It highlights:
+---
 
-Reliable motion planning
+## 🎯 Purpose
 
-Error handling and recovery
+Demonstrates advanced robotics programming skills through a complete pick-and-place system:
+- **Motion Planning**: Advanced path planning with MoveIt2
+- **Industrial Ready**: Production-grade error handling and safety
+- **ROS2 Integration**: Modern robotics middleware with action-based architecture
+- **Scalable Design**: Modular architecture for real-world applications
 
-Scalable ROS2 architecture
+---
 
-Realistic industrial robot behavior
+## ⚙️ Specifications
 
-⚙️ Specifications（仕様）
-Core Tech Stack
-ROS2: Humble
+### Technical Stack
+- **Framework**: ROS2 Humble
+- **Motion Planning**: MoveIt2 with OMPL planners
+- **Language**: Python 3.8+
+- **Robot**: Franka Emika Panda (7-DOF)
+- **Simulation**: Gazebo integration
 
-Planner: MoveIt2 + OMPL
+### Performance
+- **Precision**: ±1cm positioning accuracy
+- **Success Rate**: >95% with multi-attempt fallback
+- **Safety**: 10% velocity scaling for collision avoidance
+- **Planning**: 5.0s timeout with intelligent retry
 
-Language: Python 3.8+
+---
 
-Robot: Franka Emika Panda
+## ⭐ Key Features
 
-Sim: Gazebo
+### 🔧 Advanced Motion Planning
+- Constraint-based planning with position/orientation tolerances
+- Multi-layered fallback strategies for high success rates
+- Workspace boundary enforcement
 
-Build: colcon
+### 🛡️ Production-Ready Safety
+- Comprehensive exception handling with diagnostic logging
+- Action server verification before execution
+- Graceful error recovery mechanisms
 
-Key Specs
-Accuracy: ±1cm
+### 📦 Modular Architecture
+- Clean separation of concerns with configurable parameters
+- Easy integration with perception systems
+- Scalable for multi-robot coordination
 
-Orientation: ±0.1 rad
+---
 
-Success Rate: >95%
+## 📋 Prerequisites
 
-Velocity Scaling: 10%
-
-Workspace: 2m³
-
-⭐ Appeal Points（アピールポイント）
-Motion Planning
-Uses position/orientation constraints and fallback strategies for high success.
-
-Error Handling
-Automatic retries, diagnostics, and safe degradation.
-
-Modular Design
-Clean code, easy to extend or integrate with perception.
-
-Industrial Use Case
-Conservative motion settings and precise target control.
-
-ROS2 Best Practices
-Action-based control, resource cleanup, async nodes.
-
-📋 Prerequisites
-System
-Ubuntu 22.04 + ROS2 Humble
-
-Python 3.8+, 4GB RAM+, 10GB storage
-
-Install Packages
-bash
-Copy
-Edit
+```bash
+# Ubuntu 22.04 + ROS2 Humble
 sudo apt update
-sudo apt install ros-humble-desktop-full ros-humble-moveit \
-ros-humble-moveit-resources-panda-moveit-config \
-ros-humble-moveit-visual-tools ros-humble-geometric-shapes \
-python3-colcon-common-extensions python3-rosdep git
-🚀 Build Instructions
-1. Setup
-bash
-Copy
-Edit
-mkdir -p ~/moveit_project_ws/src
-cd ~/moveit_project_ws/src
-git clone <your-repository-url> simple_moveit_demo
-sudo rosdep init
-rosdep update
-2. Dependencies
-bash
-Copy
-Edit
-cd ~/moveit_project_ws
+sudo apt install ros-humble-desktop-full
+sudo apt install ros-humble-moveit
+sudo apt install ros-humble-moveit-resources-panda-moveit-config
+sudo apt install python3-colcon-common-extensions
+```
+
+---
+
+## 🚀 Build Instructions
+
+```bash
+# Create workspace
+mkdir -p ~/moveit_ws/src
+cd ~/moveit_ws/src
+git clone <repository-url> simple_moveit_demo
+
+# Install dependencies
+cd ~/moveit_ws
 rosdep install --from-paths src --ignore-src -r -y
-3. Build
-bash
-Copy
-Edit
-colcon build --packages-select simple_moveit_demo --cmake-clean-cache
-source install/setup.bash
-ros2 pkg list | grep simple_moveit_demo
-🎯 Operation Instructions
-Terminal 1 - Start MoveIt2
-bash
-Copy
-Edit
-ros2 launch moveit_resources_panda_moveit_config demo.launch.py
-Terminal 2 - Run Demo
-bash
-Copy
-Edit
-ros2 run simple_moveit_demo pick_place_demo
-Output
-less
-Copy
-Edit
-[INFO] [pick_place_demo]: Starting pick and place demo...
-[INFO] [pick_place_demo]: Demo completed successfully!
-🔧 Verification Methods
-Basic Checks
-bash
-Copy
-Edit
-ros2 node list | grep pick_place_demo
-ros2 topic echo /joint_states
-ros2 action list | grep move_action
-Repeated Runs
-bash
-Copy
-Edit
-for i in {1..5}; do
-  ros2 run simple_moveit_demo pick_place_demo
-  sleep 2
-done
-Visual Check
-Use RViz2 to see motion
 
-Watch for smooth path and collision avoidance
-
-📊 Technical Configuration
-yaml
-Copy
-Edit
-Robot: Panda (7 DOF)
-Planner: RRTConnect
-Velocity: 0.1
-Tolerance: 0.01m / 0.1rad
-
-Pick:  [0.4, 0.1, 0.3]  
-Place: [0.4, -0.1, 0.3]  
-Orientation: [0.0, 0.707, 0.0, 0.707]
-🔧 Customization Guide
-Change Target
-python
-Copy
-Edit
-pose.pose.position.x = 0.5
-pose.pose.position.y = 0.2
-pose.pose.position.z = 0.4
-Tweak Motion
-python
-Copy
-Edit
-move_group.set_planning_time(10.0)
-move_group.set_max_velocity_scaling_factor(0.2)
-🚨 Troubleshooting
-No Action Server?
-
-bash
-Copy
-Edit
-ros2 action list | grep move_action
-# Restart MoveIt2 if missing
-Planning Fails?
-
-bash
-Copy
-Edit
-ros2 param get /move_group/panda_arm workspace
-# Check if pose is out of bounds
-Build Errors?
-
-bash
-Copy
-Edit
-rm -rf build/ install/ log/
+# Build
 colcon build --packages-select simple_moveit_demo
+source install/setup.bash
+```
+
+---
+
+## 🎯 Usage
+
+**Terminal 1 - Launch MoveIt2:**
+```bash
+cd ~/moveit_ws && source install/setup.bash
+ros2 launch moveit_resources_panda_moveit_config demo.launch.py
+```
+
+**Terminal 2 - Run Demo:**
+```bash
+cd ~/moveit_ws && source install/setup.bash
+ros2 run simple_moveit_demo pick_place_demo
+```
+
+### Expected Output
+```
+[INFO] Initializing MoveIt2 interface...
+[INFO] MoveGroup action server found!
+[INFO] Starting pick and place demo...
+[INFO] Planning path to pick position...
+[INFO] Executing pick motion...
+[INFO] Pick motion completed successfully!
+[INFO] Planning path to place position...
+[INFO] Executing place motion...
+[INFO] Demo completed successfully!
+```
+
+---
+
+## 🔧 Verification
+
+### Quick Tests
+```bash
+# Check nodes
+ros2 node list | grep pick_place_demo
+
+# Monitor robot state
+ros2 topic echo /joint_states
+
+# Verify action server
+ros2 action list | grep move_action
+```
+
+### Visual Verification
+- Open RViz2 through MoveIt2 demo launch
+- Observe smooth trajectory execution
+- Verify end-effector reaches target positions
+
+---
+
+## 🛠️ Configuration
+
+### Target Positions
+```python
+# Pick position: [x, y, z] in meters
+pick_pose = [0.4, 0.1, 0.3]
+
+# Place position
+place_pose = [0.4, -0.1, 0.3]
+
+# Orientation (downward approach)
+orientation = [0.0, 0.707, 0.0, 0.707]  # quaternion
+```
+
+### Motion Parameters
+```yaml
+Planning:
+  attempts: 10
+  timeout: 5.0s
+  planner: RRTConnect
+  
+Safety:
+  velocity_scaling: 0.1
+  position_tolerance: 0.01m
+  orientation_tolerance: 0.1rad
+```
+
+---
+
+## 🚨 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Action server not found | Verify MoveIt2 is running: `ros2 action list` |
+| Planning failures | Check workspace boundaries and target positions |
+| Build errors | Clean rebuild: `rm -rf build/ install/ log/` |
+
+---
