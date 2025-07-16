@@ -2,6 +2,30 @@
 
 A ROS2 pick and place demonstration using MoveIt2 and the Panda robot arm.
 
+📄 Submission Overview (for 株式会社キビテク)
+🧩 Purpose（目的）
+Demonstrate basic pick-and-place robotics using MoveIt2 and a Panda arm, showcasing motion planning and ROS 2 integration for industrial automation simulation.
+
+⚙️ Specifications（仕様）
+
+ROS 2 Humble, MoveIt2, Python
+
+Franka Emika Panda robot in simulation
+
+Pick and place motion with precision constraints
+
+Runs via ROS 2 launch and action clients
+
+⭐ Appeal Points（アピールポイント）
+
+MoveIt2 motion planning with constraints
+
+Robust error handling and retries
+
+Modular, customizable code
+
+Ready for real-world extension (e.g., perception integration)
+
 ## 📋 Project Overview
 
 This project demonstrates robotics programming capabilities through a pick and place system implementation. The demo showcases proficiency in:
