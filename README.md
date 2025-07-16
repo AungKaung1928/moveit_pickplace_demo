@@ -4,7 +4,7 @@ A ROS2 pick and place demonstration using MoveIt2 and the Panda robot arm.
 
 ---
 
-## 🎯 Purpose
+## 🎯 Purpose（目的）
 
 Demonstrates advanced robotics programming skills through a complete pick-and-place system:
 - **Motion Planning**: Advanced path planning with MoveIt2
@@ -14,7 +14,7 @@ Demonstrates advanced robotics programming skills through a complete pick-and-pl
 
 ---
 
-## ⚙️ Specifications
+## ⚙️ Specifications（仕様）
 
 ### Technical Stack
 - **Framework**: ROS2 Humble
@@ -31,7 +31,7 @@ Demonstrates advanced robotics programming skills through a complete pick-and-pl
 
 ---
 
-## ⭐ Key Features
+## ⭐ Appeal Points（アピールポイント）
 
 ### 🔧 Advanced Motion Planning
 - Constraint-based planning with position/orientation tolerances
