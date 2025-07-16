@@ -125,13 +125,10 @@ moveit_project_ws/
 │       │   ├── init.py
 │       │   └── pick_place_demo.py
 │       ├── launch/
-│       │   ├── demo.launch.py
 │       │   └── moveit.launch.py
 │       ├── config/
 │       │   ├── panda_arm.yaml
 │       │   └── controllers.yaml
-│       └── urdf/
-│           └── panda_arm.urdf.xacro
 ```
 
 ### Key Components
