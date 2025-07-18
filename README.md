@@ -67,12 +67,12 @@ sudo apt install python3-colcon-common-extensions
 
 ```bash
 # Create workspace
-mkdir -p ~/moveit_ws/src
-cd ~/moveit_ws/src
+mkdir -p ~/moveit_project_ws/src
+cd ~/moveit_project_ws/src
 git clone <repository-url> simple_moveit_demo
 
 # Install dependencies
-cd ~/moveit_ws
+cd ~/moveit_project_ws
 rosdep install --from-paths src --ignore-src -r -y
 
 # Build
@@ -86,7 +86,7 @@ source install/setup.bash
 
 **Terminal 1 - Launch MoveIt2:**
 ```bash
-cd ~/moveit_ws
+cd ~/moveit_project_ws
 source install/setup.bash
 ros2 launch moveit_resources_panda_moveit_config demo.launch.py
 ```
