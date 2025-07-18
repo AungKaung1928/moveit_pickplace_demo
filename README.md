@@ -63,6 +63,24 @@ sudo apt install python3-colcon-common-extensions
 
 ---
 
+## 📁 Project Structure
+
+```
+~/moveit_project_ws/
+├── src/
+│   └── simple_moveit_demo/
+│       ├── package.xml
+│       ├── setup.py
+│       ├── simple_moveit_demo/
+│       │   ├── init.py
+│       │   └── pick_place_demo.py
+│       ├── launch/
+│       │   └── moveit.launch.py
+│       ├── config/
+│       │   ├── panda_arm.yaml
+│       │   └── controllers.yaml
+```
+
 ## 🚀 Build Instructions
 
 ```bash
@@ -93,7 +111,8 @@ ros2 launch moveit_resources_panda_moveit_config demo.launch.py
 
 **Terminal 2 - Run Demo:**
 ```bash
-cd ~/moveit_ws && source install/setup.bash
+cd ~/moveit_project_ws
+source install/setup.bash
 ros2 run simple_moveit_demo pick_place_demo
 ```
 
