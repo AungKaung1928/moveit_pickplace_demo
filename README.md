@@ -86,7 +86,8 @@ source install/setup.bash
 
 **Terminal 1 - Launch MoveIt2:**
 ```bash
-cd ~/moveit_ws && source install/setup.bash
+cd ~/moveit_ws
+source install/setup.bash
 ros2 launch moveit_resources_panda_moveit_config demo.launch.py
 ```
 
