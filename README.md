@@ -21,7 +21,6 @@ Demonstrates advanced robotics programming skills through a complete pick-and-pl
 - **Motion Planning**: MoveIt2 with OMPL planners
 - **Language**: Python 3.8+
 - **Robot**: Franka Emika Panda (7-DOF)
-- **Simulation**: Gazebo integration
 
 ### Performance
 - **Precision**: ±1cm positioning accuracy
