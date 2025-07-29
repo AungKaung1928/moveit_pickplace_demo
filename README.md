@@ -75,9 +75,6 @@ sudo apt install python3-colcon-common-extensions
 │       │   └── pick_place_demo.py
 │       ├── launch/
 │       │   └── moveit.launch.py
-│       ├── config/
-│       │   ├── panda_arm.yaml
-│       │   └── controllers.yaml
 ```
 
 ## 🚀 Build Instructions
