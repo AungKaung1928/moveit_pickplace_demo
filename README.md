@@ -186,3 +186,104 @@ Safety:
 | Build errors | Clean rebuild: `rm -rf build/ install/ log/` |
 
 ---
+Position and Orientation Variables
+Pick/Place Positions (in meters):
+python
+# Current values
+x=0.4, y=0.1, z=0.3    # Pick position
+x=0.4, y=-0.1, z=0.3   # Place position
+
+# Adjustable ranges (for Panda robot):
+x: 0.2 to 0.8     # Forward/backward reach
+y: -0.8 to 0.8    # Left/right reach  
+z: 0.1 to 1.0     # Height above base
+Orientation (Quaternion values):
+python
+# Current: Quaternion(x=0.0, y=0.0, z=0.0, w=1.0)  # Straight down
+# Common orientations:
+# Straight down: (0.0, 0.0, 0.0, 1.0)
+# 45° tilt: (0.0, 0.383, 0.0, 0.924)
+# 90° rotation: (0.0, 0.0, 0.707, 0.707)
+Motion Planning Variables
+Planning Attempts:
+python
+num_planning_attempts = 10    # Current
+# Range: 1 to 50
+# - Lower (1-5): Faster but may fail
+# - Higher (20-50): More reliable but slower
+Planning Time:
+python
+allowed_planning_time = 5.0    # Current (seconds)
+# Range: 1.0 to 30.0 seconds
+# - 1.0-3.0: Quick movements
+# - 5.0-10.0: Standard use
+# - 15.0-30.0: Complex environments
+Speed Control:
+python
+max_velocity_scaling_factor = 0.1      # Current (10% speed)
+max_acceleration_scaling_factor = 0.1   # Current (10% acceleration)
+
+# Range: 0.01 to 1.0
+# - 0.01-0.1: Very slow/safe
+# - 0.1-0.3: Normal operation
+# - 0.5-0.8: Fast operation
+# - 0.9-1.0: Maximum speed (use carefully)
+Constraint Variables
+Position Tolerance:
+python
+dimensions = [0.01, 0.01, 0.01]    # Current (1cm tolerance)
+# Range: [0.001, 0.001, 0.001] to [0.1, 0.1, 0.1]
+# - [0.001, 0.001, 0.001]: 1mm precision (very strict)
+# - [0.005, 0.005, 0.005]: 5mm precision (precise)
+# - [0.01, 0.01, 0.01]: 1cm precision (standard)
+# - [0.05, 0.05, 0.05]: 5cm precision (loose)
+Orientation Tolerance:
+python
+absolute_x_axis_tolerance = 0.1    # Current (radians)
+absolute_y_axis_tolerance = 0.1
+absolute_z_axis_tolerance = 0.1
+
+# Range: 0.01 to 3.14 radians
+# - 0.01-0.05: Very precise orientation
+# - 0.1-0.2: Standard precision
+# - 0.5-1.0: Loose orientation
+# - 3.14: Any orientation allowed
+Constraint Weights:
+python
+weight = 1.0    # Current
+# Range: 0.1 to 1.0
+# - 0.1-0.3: Low priority
+# - 0.5-0.7: Medium priority
+# - 0.8-1.0: High priority
+Workspace Variables
+Working Area (in meters):
+python
+# Current workspace: 2m x 2m x 2m cube
+min_corner = Vector3(x=-1.0, y=-1.0, z=-1.0)
+max_corner = Vector3(x=1.0, y=1.0, z=1.0)
+
+# Typical ranges for Panda robot:
+# Conservative workspace:
+# min: (-0.5, -0.5, 0.0)  max: (0.8, 0.5, 1.0)
+
+# Extended workspace:
+# min: (-0.8, -0.8, -0.2)  max: (0.9, 0.8, 1.2)
+Practical Examples
+For Precise Assembly Work:
+python
+max_velocity_scaling_factor = 0.05
+dimensions = [0.002, 0.002, 0.002]
+absolute_x_axis_tolerance = 0.02
+allowed_planning_time = 10.0
+For Fast Pick and Place:
+python
+max_velocity_scaling_factor = 0.5
+dimensions = [0.02, 0.02, 0.02]
+absolute_x_axis_tolerance = 0.3
+allowed_planning_time = 3.0
+For Heavy Objects:
+python
+max_velocity_scaling_factor = 0.2
+max_acceleration_scaling_factor = 0.1
+allowed_planning_time = 8.0
+num_planning_attempts = 20
