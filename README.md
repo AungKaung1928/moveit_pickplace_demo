@@ -77,7 +77,7 @@ sudo apt install python3-colcon-common-extensions
 │       │   └── moveit.launch.py
 ```
 
-## 🚀 Build Instructions
+## 🧪 Build Instructions
 
 ```bash
 # Create workspace
