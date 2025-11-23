@@ -1,10 +1,10 @@
-# 🤖 MoveIt2 Pick and Place Demo
+#  MoveIt2 Pick and Place Demo
 
 A ROS2 pick and place demonstration using MoveIt2 and the Panda robot arm.
 
 ---
 
-## 🎯 Purpose（目的）
+##  Purpose（目的）
 
 Demonstrates advanced robotics programming skills through a complete pick-and-place system:
 - **Motion Planning**: Advanced path planning with MoveIt2
@@ -14,7 +14,7 @@ Demonstrates advanced robotics programming skills through a complete pick-and-pl
 
 ---
 
-## ⚙️ Specifications（仕様）
+##  Specifications（仕様）
 
 ### Technical Stack
 - **Framework**: ROS2 Humble
@@ -30,26 +30,26 @@ Demonstrates advanced robotics programming skills through a complete pick-and-pl
 
 ---
 
-## ⭐ Appeal Points（アピールポイント）
+##  Appeal Points（アピールポイント）
 
-### 🔧 Advanced Motion Planning
+###  Advanced Motion Planning
 - Constraint-based planning with position/orientation tolerances
 - Multi-layered fallback strategies for high success rates
 - Workspace boundary enforcement
 
-### 🛡️ Production-Ready Safety
+###  Production-Ready Safety
 - Comprehensive exception handling with diagnostic logging
 - Action server verification before execution
 - Graceful error recovery mechanisms
 
-### 📦 Modular Architecture
+###  Modular Architecture
 - Clean separation of concerns with configurable parameters
 - Easy integration with perception systems
 - Scalable for multi-robot coordination
 
 ---
 
-## 📋 Prerequisites
+##  Prerequisites
 
 ```bash
 # Ubuntu 22.04 + ROS2 Humble
@@ -62,7 +62,7 @@ sudo apt install python3-colcon-common-extensions
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 ~/moveit_project_ws/
@@ -77,7 +77,7 @@ sudo apt install python3-colcon-common-extensions
 │       │   └── moveit.launch.py
 ```
 
-## 🧪 Build Instructions
+##  Build Instructions
 
 ```bash
 # Create workspace
@@ -96,7 +96,7 @@ source install/setup.bash
 
 ---
 
-## 🎯 Usage
+##  Usage
 
 **Terminal 1 - Launch MoveIt2:**
 ```bash
@@ -127,7 +127,7 @@ ros2 run simple_moveit_demo pick_place_demo
 
 ---
 
-## 🔧 Verification
+##  Verification
 
 ### Quick Tests
 ```bash
@@ -148,7 +148,7 @@ ros2 action list | grep move_action
 
 ---
 
-## 🛠️ Configuration
+##  Configuration
 
 ### Target Positions
 ```python
@@ -177,7 +177,7 @@ Safety:
 
 ---
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
