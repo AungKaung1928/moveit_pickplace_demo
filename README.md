@@ -83,7 +83,7 @@ sudo apt install python3-colcon-common-extensions
 # Create workspace
 mkdir -p ~/moveit_project_ws/src
 cd ~/moveit_project_ws/src
-git clone <repository-url> simple_moveit_demo
+git clone https://github.com/AungKaung1928/moveit_pickplace_demo.git simple_moveit_demo
 
 # Install dependencies
 cd ~/moveit_project_ws
