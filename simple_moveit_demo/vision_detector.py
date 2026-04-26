@@ -22,7 +22,7 @@ from cv_bridge import CvBridge
 import cv2
 import numpy as np
 
-from simple_moveit_demo.shape_classifier import ShapeClassifier
+from simple_moveit_demo.shape_classifier import YOLODetector, geometric_classify
 
 # ── Camera intrinsics (updated dynamically from /camera/camera_info) ──────────
 _DEFAULT_K = [520.0, 0.0, 320.0,
@@ -79,7 +79,7 @@ class VisionDetector(Node):
         self._cy = self._K[5]
 
         self._bridge = CvBridge()
-        self._classifier = ShapeClassifier()   # starts background training
+        self._yolo = YOLODetector()   # YOLOv8n pretrained on COCO
 
         # ArUco setup
         self._aruco_dict   = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
@@ -122,6 +122,21 @@ class VisionDetector(Node):
         hsv  = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         img_area = frame.shape[0] * frame.shape[1]
+
+        # ── 0. YOLOv8n inference (COCO weights — domain gap expected) ─────────
+        yolo_dets = self._yolo.detect(frame)
+        for det in yolo_dets:
+            x1, y1, x2, y2 = (int(v) for v in det['bbox'])
+            cv2.rectangle(vis, (x1, y1), (x2, y2), (0, 255, 255), 2)
+            cv2.putText(vis, f"YOLO:{det['class']} {det['confidence']:.2f}",
+                        (x1, max(y1 - 4, 10)),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.40, (0, 255, 255), 1)
+        if not yolo_dets:
+            cv2.putText(vis, 'YOLO: 0 det (domain gap)',
+                        (8, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 180, 255), 1)
+            self.get_logger().debug('No YOLO detections — COCO weights vs synthetic top-down camera')
+        else:
+            self.get_logger().info(f'YOLO: {len(yolo_dets)} object(s) detected')
 
         # ── 1. ArUco detection ────────────────────────────────────────────────
         corners_list, ids, _ = cv2.aruco.detectMarkers(
@@ -186,8 +201,7 @@ class VisionDetector(Node):
                 aspect  = rw / (rh + 1e-6)
                 area_norm = area_px / img_area
 
-                shape_cls, confidence = self._classifier.classify(
-                    area_norm, aspect, circ, solidity, extent)
+                shape_cls, confidence = geometric_classify(circ, aspect, solidity)
 
                 # Minimum-area bounding rect → grasp angle
                 (_, _), (_, _), angle = cv2.minAreaRect(cnt)

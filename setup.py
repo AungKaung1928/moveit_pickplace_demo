@@ -33,8 +33,12 @@ setup(
             # Vision pipeline
             'camera_simulator   = simple_moveit_demo.camera_simulator:main',
             'vision_detector    = simple_moveit_demo.vision_detector:main',
+            'depth_estimator    = simple_moveit_demo.depth_estimator:main',
             # Smart controller
             'smart_pick_place   = simple_moveit_demo.smart_pick_place:main',
+            # Perception tools
+            'export_model       = simple_moveit_demo.export_model:main',
+            'benchmark          = simple_moveit_demo.benchmark:main',
         ],
     },
 )
