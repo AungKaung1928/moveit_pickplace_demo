@@ -82,8 +82,9 @@ class VisionDetector(Node):
         self._yolo = YOLODetector()   # YOLOv8n pretrained on COCO
 
         # ArUco setup
-        self._aruco_dict   = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
-        self._aruco_params = cv2.aruco.DetectorParameters_create()
+        self._aruco_dict     = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
+        self._aruco_params   = cv2.aruco.DetectorParameters()
+        self._aruco_detector = cv2.aruco.ArucoDetector(self._aruco_dict, self._aruco_params)
 
         # Publishers
         self._marker_pub  = self.create_publisher(MarkerArray, '/detected_objects',  10)
@@ -139,14 +140,20 @@ class VisionDetector(Node):
             self.get_logger().info(f'YOLO: {len(yolo_dets)} object(s) detected')
 
         # ── 1. ArUco detection ────────────────────────────────────────────────
-        corners_list, ids, _ = cv2.aruco.detectMarkers(
-            gray, self._aruco_dict, parameters=self._aruco_params)
+        corners_list, ids, _ = self._aruco_detector.detectMarkers(gray)
 
         if ids is not None:
             cam_mat  = np.array(self._K, dtype=np.float64).reshape(3, 3)
             dist     = np.zeros((5,), dtype=np.float64)
-            rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(
-                corners_list, MARKER_SIZE_M, cam_mat, dist)
+            half     = MARKER_SIZE_M / 2.0
+            obj_pts  = np.array([[-half, half, 0], [half, half, 0],
+                                  [half, -half, 0], [-half, -half, 0]], dtype=np.float32)
+            rvecs = []
+            tvecs = []
+            for corner in corners_list:
+                _, rvec, tvec = cv2.solvePnP(obj_pts, corner[0], cam_mat, dist)
+                rvecs.append(rvec)
+                tvecs.append(tvec.reshape(1, 3))
 
             for i, (corners, tvec) in enumerate(zip(corners_list, tvecs)):
                 # tvec is in camera frame; convert to robot frame (top-down cam)
@@ -161,8 +168,8 @@ class VisionDetector(Node):
                 detections.append((obj_x, obj_y, obj_z, label, 0.0))
 
                 # Draw axis on image
-                cv2.aruco.drawAxis(vis, cam_mat, dist,
-                                   rvecs[i], tvecs[i], 0.03)
+                cv2.drawFrameAxes(vis, cam_mat, dist,
+                                  rvecs[i], tvecs[i], 0.03)
                 cv2.putText(vis, f'A{ids[i][0]}',
                             tuple(corners[0][0].astype(int)),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 200, 255), 2)

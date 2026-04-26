@@ -59,7 +59,7 @@ class CameraSimulator(Node):
         self.info_pub = self.create_publisher(CameraInfo, '/camera/camera_info', 10)
 
         # Prepare ArUco dictionary
-        self.aruco_dict   = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_50)
+        self.aruco_dict   = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
 
         self._frame = 0
         self.timer = self.create_timer(1.0 / rate, self.publish_frame)
@@ -104,8 +104,7 @@ class CameraSimulator(Node):
 
             # Overlay ArUco marker (30×30 px) at object centre
             marker_px = 30
-            marker_img = np.zeros((marker_px, marker_px), dtype=np.uint8)
-            cv2.aruco.drawMarker(self.aruco_dict, obj['id'], marker_px, marker_img, 1)
+            marker_img = cv2.aruco.generateImageMarker(self.aruco_dict, obj['id'], marker_px)
             marker_bgr = cv2.cvtColor(marker_img, cv2.COLOR_GRAY2BGR)
 
             mx0 = cx - marker_px // 2
