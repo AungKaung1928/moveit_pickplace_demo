@@ -3,11 +3,12 @@ Smart pick-and-place demo launch file.
 
 Starts:
   1. MoveIt2 move_group + robot_state_publisher + static TF
-  2. RViz2
-  3. camera_simulator     — synthetic top-down camera
-  4. vision_detector      — OpenCV + ArUco + PyTorch classifier
-  5. workspace_validator  — C++ reachability filter
-  6. smart_pick_place     — FSM controller with colour sorting
+  2. ros2_control (mock hardware) + joint_state_broadcaster + panda_arm_controller
+  3. RViz2
+  4. camera_simulator     — synthetic top-down camera
+  5. vision_detector      — OpenCV + ArUco + PyTorch classifier
+  6. workspace_validator  — C++ reachability filter
+  7. smart_pick_place     — FSM controller with colour sorting
 """
 
 import os
@@ -23,8 +24,17 @@ def generate_launch_description():
     pkg_share = get_package_share_directory('simple_moveit_demo')
 
     moveit_config = (
-        MoveItConfigsBuilder("panda",
+        MoveItConfigsBuilder("moveit_resources_panda",
                              package_name="moveit_resources_panda_moveit_config")
+        .robot_description(
+            file_path="config/panda.urdf.xacro",
+            mappings={"ros2_control_hardware_type": "mock_components"},
+        )
+        .robot_description_semantic(file_path="config/panda.srdf")
+        .robot_description_kinematics()
+        .trajectory_execution(file_path="config/moveit_controllers.yaml")
+        .planning_pipelines(pipelines=["ompl"])
+        .joint_limits()
         .to_moveit_configs()
     )
 
@@ -44,6 +54,8 @@ def generate_launch_description():
             moveit_config.robot_description_kinematics,
             moveit_config.planning_pipelines,
             moveit_config.joint_limits,
+            moveit_config.trajectory_execution,
+            moveit_config.moveit_cpp,
         ],
     )
 
@@ -61,16 +73,45 @@ def generate_launch_description():
         output='log',
     )
 
-    # Camera → panda_link0 static TF (camera mounted ~80 cm above, looking down)
     camera_tf = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
         name='camera_tf',
-        # x=0.40, y=0, z=0.80 relative to panda_link0, pointing straight down
-        # RPY: roll=pi (flip Z) so camera looks downward
         arguments=['0.40', '0', '0.80', '3.14159', '0', '0',
                    'panda_link0', 'camera_link'],
         output='log',
+    )
+
+    # ── ros2_control (mock hardware) ─────────────────────────────────────────
+    ros2_controllers_path = os.path.join(
+        get_package_share_directory('moveit_resources_panda_moveit_config'),
+        'config', 'ros2_controllers.yaml',
+    )
+    ros2_control_node = Node(
+        package='controller_manager',
+        executable='ros2_control_node',
+        parameters=[ros2_controllers_path],
+        remappings=[('/controller_manager/robot_description', '/robot_description')],
+        output='screen',
+    )
+
+    # Spawners delayed so controller_manager has time to start
+    joint_state_broadcaster_spawner = TimerAction(
+        period=2.0,
+        actions=[Node(
+            package='controller_manager',
+            executable='spawner',
+            arguments=['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
+        )],
+    )
+
+    panda_arm_controller_spawner = TimerAction(
+        period=3.0,
+        actions=[Node(
+            package='controller_manager',
+            executable='spawner',
+            arguments=['panda_arm_controller', '-c', '/controller_manager'],
+        )],
     )
 
     # ── RViz ────────────────────────────────────────────────────────────────
@@ -97,7 +138,6 @@ def generate_launch_description():
         name='camera_simulator',
         output='screen',
         parameters=[{'publish_rate': 10.0}],
-        condition=None,   # always start in this demo
     )
 
     vision_detector = Node(
@@ -121,9 +161,9 @@ def generate_launch_description():
         }],
     )
 
-    # ── Smart pick-place controller (delayed 3 s to let MoveIt warm up) ─────
+    # ── Smart pick-place controller (delayed to let MoveIt + controllers warm up)
     smart_controller = TimerAction(
-        period=3.0,
+        period=6.0,
         actions=[
             Node(
                 package='simple_moveit_demo',
@@ -136,13 +176,21 @@ def generate_launch_description():
 
     return LaunchDescription([
         use_sim_camera,
+        # MoveIt core
         move_group,
         robot_state_pub,
         static_tf,
         camera_tf,
+        # ros2_control mock hardware
+        ros2_control_node,
+        joint_state_broadcaster_spawner,
+        panda_arm_controller_spawner,
+        # UI
         rviz,
+        # Vision
         camera_sim,
         vision_detector,
         workspace_validator,
+        # Controller
         smart_controller,
     ])
