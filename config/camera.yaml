@@ -1,0 +1,27 @@
+# Simulated top-down camera parameters
+# Physical camera would read these from camera_info topic
+
+camera:
+  frame_id: camera_link
+  parent_frame: panda_link0
+
+  # Mount position relative to panda_link0 (m)
+  position:
+    x: 0.40
+    y: 0.00
+    z: 0.80
+
+  # Intrinsics (pixels)
+  image_width:  640
+  image_height: 480
+  fx: 520.0
+  fy: 520.0
+  cx: 320.0
+  cy: 240.0
+
+  # Physical field of view at table surface (m)
+  fov_x: 0.620
+  fov_y: 0.465
+
+  # ArUco marker side length (m)
+  aruco_marker_size: 0.030
