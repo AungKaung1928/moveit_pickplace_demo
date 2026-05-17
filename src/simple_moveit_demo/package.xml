@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypetype="xml"?>
+<package format="3">
+  <name>simple_moveit_demo</name>
+  <version>0.1.0</version>
+  <description>
+    MoveIt2 smart pick-and-place demo — vision (OpenCV + ArUco),
+    PyTorch shape classifier, FSM controller, colour-based sorting.
+  </description>
+  <maintainer email="aungkaungmyattt1928@gmail.com">Aung Kaung Myat</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- ROS 2 core -->
+  <depend>rclpy</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>std_msgs</depend>
+
+  <!-- MoveIt2 -->
+  <depend>moveit_msgs</depend>
+  <depend>moveit_core</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_configs_utils</depend>
+  <depend>moveit_resources_panda_moveit_config</depend>
+
+  <!-- Vision -->
+  <depend>cv_bridge</depend>
+  <depend>vision_msgs</depend>
+
+  <!-- TF2 -->
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+
+  <!-- URDF / robot state -->
+  <depend>robot_state_publisher</depend>
+
+  <!-- Test -->
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

@@ -33,6 +33,6 @@ devel/
 *.swo
 *~
 
-# Model weights
+# Model weights (download via ultralytics on first run)
 *.pt
 *.onnx

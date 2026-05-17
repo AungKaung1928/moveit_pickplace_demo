@@ -1,0 +1,23 @@
+# Smart pick-and-place demo parameters
+
+smart_pick_place:
+  ros__parameters:
+    ball_count: 7
+    # Motion parameters
+    planning_attempts: 12
+    planning_time_s: 6.0
+    velocity_scaling: 0.15
+    acceleration_scaling: 0.15
+
+    # Workspace bounds (panda_link0 frame, m)
+    workspace_x_min: -1.2
+    workspace_x_max:  1.2
+    workspace_y_min: -1.2
+    workspace_y_max:  1.2
+
+workspace_validator:
+  ros__parameters:
+    max_reach:   0.82
+    min_reach:   0.18
+    max_height:  0.98
+    min_height: -0.05
